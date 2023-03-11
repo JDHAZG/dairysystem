@@ -32,7 +32,6 @@ router.get('/', function(req, res, next) {
       res.render('index', { username:username ,data:data});
      })
      else{
-      console.log('啥也没有')
       res.render('nodata',{ username:username})
      }
    })

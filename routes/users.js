@@ -13,10 +13,13 @@ router.post('/regist',function(req,res,next){
     password: req.body.password,
     password2: req.body.password2
   } 
+  if(data.password===data.password2)
   UserModel.find({username:data.username}).then((item) => { 
     if(item.length>=1){
       // window.alert('该账号已经有人注册了，请换一个用户名');
-      res.send('该账号已经有人注册了，请返回注册页，换一个用户名')
+      // res.send('该账号已经有人注册了，请返回注册页，换一个用户名')
+      var message='该用户名已经有人注册了，请换一个用户名';
+      res.render('fail',{message:message,address:'regist'});
       res.redirect('/regist');
     }else{
       UserModel.create(data).then((item) => { 
@@ -28,6 +31,11 @@ router.post('/regist',function(req,res,next){
         })
     }
    })
+   else{
+    var message='两次密码输入不一致，请重新输入';
+    res.render('fail',{message:message,address:'regist'});
+    res.redirect('/regist');
+   }
 })
 
 // 登录接口
@@ -42,7 +50,8 @@ router.post('/login',function(req,res,next){
       req.session.username=data.username
       res.redirect('/');
     }else{
-      // res.send('用户名或密码错误');
+      var message='用户名或密码输入错误，请重新输入';
+      res.render('fail',{message:message,address:'login'});
       res.redirect('/login');
     }
    }).catch((error) => { 
