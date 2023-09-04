@@ -20,7 +20,6 @@ router.post('/regist',function(req,res,next){
       // res.send('该账号已经有人注册了，请返回注册页，换一个用户名')
       var message='该用户名已经有人注册了，请换一个用户名';
       res.render('fail',{message:message,address:'regist'});
-      res.redirect('/regist');
     }else{
       UserModel.create(data).then((item) => { 
         console.log(item);
@@ -34,7 +33,6 @@ router.post('/regist',function(req,res,next){
    else{
     var message='两次密码输入不一致，请重新输入';
     res.render('fail',{message:message,address:'regist'});
-    res.redirect('/regist');
    }
 })
 
@@ -52,7 +50,6 @@ router.post('/login',function(req,res,next){
     }else{
       var message='用户名或密码输入错误，请重新输入';
       res.render('fail',{message:message,address:'login'});
-      res.redirect('/login');
     }
    }).catch((error) => { 
      res.redirect('/login');
